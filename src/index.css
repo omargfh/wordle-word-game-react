@@ -7,7 +7,177 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#root {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+
+}
+
+.canvas {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.wordle-canvas {
+  width: fit-content;
+  height: fit-content;
+  margin: 1rem;
+}
+
+.wordle-row {
+
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+
+}
+
+.wordle-space {
+  width: 50px;
+  height: 50px;
+  color: white;
+  background-color: white;
+  padding: 0.2rem;
+  margin: 0.1rem 0.2rem;
+  border: 0.1rem solid rgb(122, 122, 122);
+  border-radius: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20pt;
+  font-weight: 800;
+  user-select: none;
+  transition: background 0.1s linear;
+  transition-delay: 0.1s;
+}
+
+.wordle-space.input {
+  color: black;
+}
+
+.wordle-space.animate {
+  animation: rotateAnimation 1.5s forwards;
+}
+@keyframes rotateAnimation {
+	from {transform: rotateY(90deg);}
+	to {transform: rotateY(0deg);}
+}
+
+.wordle-space.pulse {
+  animation: pulseAnimation 0.3s forwards;
+}
+@keyframes pulseAnimation {
+  0%  {transform: scale(1); filter: brightness(1);}
+  50% {transform: scale(1.1); filter: brightness(1.1);}
+  100%  {transform: scale(1); filter: brightness(1)}
+}
+.wordle-space.hasinput {
+  border: 0.1rem solid rgb(88,88,88);
+}
+
+.wordle-space.black {
+  background-color: gray;
+  color: white;
+  border-color: gray;
+}
+
+.wordle-space.green {
+  background-color: rgb(71, 155, 68);
+  color: white;
+  border-color: rgb(71, 155, 68);
+}
+
+.wordle-space.yellow {
+  background-color: rgb(236, 201, 0);
+  color: rgb(255, 255, 255);
+  border-color: rgb(236, 201, 0);
+
+}
+
+.keyboard {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.keyboard-row {
+  width: fit-content;
+  display: flex;
+}
+
+.keyboard-key {
+  width: 35px;
+  height: 45px;
+  background-color: rgb(88, 88, 88);
+  border-radius: 0.3rem;
+  color: white;
+  font-size: 20pt;
+  font-weight: 800;
+  padding: 0.2rem;
+  margin: 0.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.keyboard-key.backspace {
+  background-color: rgb(155, 10, 10);
+  width: 50px;
+}
+
+.keyboard-key.enter {
+  background-color: rgb(10, 121, 155);
+  width: 50px;
+}
+
+.keyboard-key.key-black {
+  background-color: black;
+}
+
+.keyboard-key.key-green {
+  background-color: rgb(71, 155, 68);
+}
+
+.keyboard-key.key-yellow {
+  background-color: rgb(236, 201, 0);
+}
+
+.keyboard-key:hover {
+  box-shadow: rgba(50, 50, 93, 0.123) 0px 6px 12px -2px, rgba(0, 0, 0, 0.062) 0px 3px 7px -3px;
+  filter: brightness(0.85);
+  cursor: pointer
+}
+
+@media only screen and (max-width: 500px) {
+
+  #root {
+    justify-content: space-evenly;
+  }
+  .keyboard-key {
+    width: 27px;
+    height: 40px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+
+  #root {
+    justify-content: space-evenly;
+  }
+  .keyboard-key {
+    width: 23px;
+    height: 35px;
+  }
 }
