@@ -5,6 +5,7 @@ import Allowed_Words from './allowed_words.json'
 import Possible_Words from './possible_words.json'
 
 import plain_game from './plain_game'
+import Header from './components/header'
 
 function App() {
 
@@ -382,24 +383,31 @@ function App() {
   return (
     <>
 
-    <div>
-      <h3 style={{"textAlign": "center"}}>Word to guess: {globalUIObject.word}</h3>
-      <h4 style={{"textAlign": "center"}}>Score: {score}</h4>
+    <Header reset={() => {
+            setScore(0)
+            initiate_game(plain_game)
+    }}/>
+
+    <div className='canvas'>
+      <div className='score'>
+        <h4 style={{"textAlign": "center"}}>Score: {score}</h4>
+      </div>
+
+      {guessCanvasUI}
+      {keyboardUI}
+
+      <button onClick={(e) => {
+        e.preventDefault();
+        if (globalUIObject.input_line.split("").length === globalSettings.characters) {
+          push_guess(globalUIObject, globalUIObject.input_line);
+        }
+      }} style={{"display": "none"}} ref={enter_guess}></button>
+
+      <button onClick={(e) => {
+        e.preventDefault();
+        update_globalUI_object(globalUIObject, {...globalUIObject, input_line:globalUIObject.input_line.substring(0, globalUIObject.input_line.length - 1)})
+      }} style={{"display": "none"}} ref={bspace}></button>
     </div>
-
-    {guessCanvasUI}
-    {keyboardUI}
-
-    <button onClick={(e) => {
-      e.preventDefault();
-      if (globalUIObject.input_line.split("").length === globalSettings.characters) {
-        push_guess(globalUIObject, globalUIObject.input_line);
-      }
-    }} style={{"display": "none"}} ref={enter_guess}></button>
-    <button onClick={(e) => {
-      e.preventDefault();
-      update_globalUI_object(globalUIObject, {...globalUIObject, input_line:globalUIObject.input_line.substring(0, globalUIObject.input_line.length - 1)})
-    }} style={{"display": "none"}} ref={bspace}></button>
 
     </>
   );

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@800&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,22 +9,148 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#root {
+/* Header */
 
+header {
+  height: 45px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.title {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto Slab', serif;
+  font-size: 20pt;
+
+}
+
+.header-btn {
+  width: 20px;
+  height: 20px;
+  margin: 1rem;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 2;
+}
+.header-btn.green {
+  background-color: rgb(71, 155, 68);
+}
+
+.header-btn img {
+  width: 100%;
+  height: 100%;
+  filter: invert(100%) sepia(0%) saturate(7492%) hue-rotate(255deg) brightness(101%) contrast(100%)
+}
+.header-btn:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+
+/* Sidebar */
+.sidebar .close {
+  transition: all 0.6s ease-in-out;
+}
+
+.sidebar.toggled .close {
+  transform: translateX(140px);
+  background-color:  gray;
+}
+
+/* Close button animations */
+.change .bars {
+  transform: translateY(4.5px);
+}
+.bar1,
+.bar2,
+.bar3 {
+  height: 3px;
+  background-color: rgb(255, 255, 255);
+  margin: 3px 0;
+  transition: 0.4s;
+  border-radius: 5px;
+  width: 20px;
+}
+.change .bar1 {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+.change .bar2 {
+  opacity: 0;
+}
+.change .bar3 {
+  transform: rotate(45deg) translate(-8px, -8px);
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+}
+
+/* Sidebar */
+
+.sidebar {
+  position: relative;
+}
+
+.sidebar-content {
+  background-color: white;
+  width: 200px;
+  height: 102vh;
+  border-right: 1px solid black;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  left: -202px;
+  transition: left 0.6s ease-in-out;
+}
+
+.sidebar-content::before {
+  content: '';
+  height: 55px;
+  display: block;
+}
+
+.sidebar.toggled .sidebar-content {
+  left: 0px;
+}
+
+/* Sidebar entries */
+.sidebar-btn {
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  font-family: 'Roboto Slab', serif;
+  padding: 1rem 0;
+  cursor: pointer;
+  background-color: rgb(241, 241, 241);
+  color:rgb(27, 27, 27);
+
+}
+
+.sidebar-btn .icon {
+  margin: 0 1rem;
+}
+
+.sidebar-btn a {
+  text-decoration: none;
+  color:rgb(27, 27, 27);
+}
+
+.sidebar-btn:hover {
+  background-color: rgb(221, 221, 221);
+}
+
+/* UI Canvas */
+.canvas {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100vh;
-
-}
-
-.canvas {
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  height: calc(100vh - 45px);
 }
 
 .wordle-canvas {
@@ -45,6 +173,7 @@ body {
   color: white;
   background-color: white;
   padding: 0.2rem;
+  z-index: -1;
   margin: 0.1rem 0.2rem;
   border: 0.1rem solid rgb(122, 122, 122);
   border-radius: 0.3rem;
@@ -180,4 +309,57 @@ body {
     width: 23px;
     height: 35px;
   }
+}
+
+/* Score */
+.score {
+  margin: 1rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.score h4 {
+  font-family: 'Roboto Slab', serif;
+  font-size: 20pt;
+  /* margin: 1rem; */
+}
+
+/* Social Media bar */
+.icon {
+  display: inline;
+  font-size: 22px;
+}
+
+.icon-text {
+  margin: 3px;
+}
+
+a.icon-text:hover {
+  text-decoration: none;
+  text-shadow: 1px 1px 4px rgb(119, 119, 118);
+}
+
+.sidebar-content ul {
+  position: absolute;
+  bottom: 0;
+  margin: 1rem 0.2rem;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  transform: scale(0.9);
+  cursor: pointer;
+}
+
+.sidebar-content ul li {
+  list-style: none;
+  display: inline;
+  padding: 0px 10px 0px 0px;
+}
+
+.sidebar-content a {
+  color: rgba(32, 32, 32, 0.767);
 }
