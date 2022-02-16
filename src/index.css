@@ -50,7 +50,7 @@ header {
 
 .header-btn {
   width: 20px;
-  height: 20px;
+  height:  20px;
   margin: 1rem;
   padding: 0.3rem;
   border-radius: 0.3rem;
@@ -163,7 +163,7 @@ header {
 	to {transform: rotateY(0deg);}
 }
 
-.wordle-space.pulse {
+.wordle-space.pulse, .pulse {
   animation: pulseAnimation 0.3s forwards;
 }
 @keyframes pulseAnimation {
@@ -255,6 +255,14 @@ header {
   cursor: pointer
 }
 
+@media only screen and (max-width: 765px) {
+  :root {
+    --header-height: 55px;
+  }
+  .header-btn {
+    transform: scale(1.15);
+  }
+}
 @media only screen and (max-width: 500px) {
 
   #root {
@@ -315,7 +323,7 @@ header {
 
 .sidebar-content::before {
   content: '';
-  height: 45px;
+  height: var(--header-height);
   display: block;
 }
 
@@ -357,7 +365,7 @@ header {
 
 .sidebar-content .sidebar-list .sidebar-btn a {
   text-decoration: none;
-  color:var(--color-black);
+  color: var(--color-black);
 }
 
 .sidebar-content .sidebar-list ul {
@@ -412,4 +420,44 @@ header {
 
 .sidebar-content .sidebar-footer  a {
   color: rgba(32, 32, 32, 0.767);
+}
+
+/* Prompt Message */
+.prompt-msg {
+  position: absolute;
+  top: 0px;
+  z-index: 10000;
+  width: fit-content;
+  height: fit-content;
+  padding: 0rem 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  background-color: white;
+  transition: all 1s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
+}
+
+/* Animations and animation-related classes */
+.hidden {
+  display: none!important;
+}
+
+.shake {
+  animation: shakeAnimation 1s cubic-bezier(.36,.07,.19,.97) forwards;
+}
+
+@keyframes shakeAnimation {
+  0%, 100% {transform: translateX(0);} 
+   10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);} 
+   20%, 40%, 60%, 80% {transform: translateX(10px);} 
+}
+
+.fade-in {
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+}
+
+.fade-out {
+  transition: opacity 1s ease-in-out;
+  opacity: 0;
 }

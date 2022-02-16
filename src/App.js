@@ -185,15 +185,14 @@ function App() {
     // If the new guess is the actual word, execute win routine
     if (globalUIObject.plain_guesses[globalUIObject.plain_guesses.length - 1] === globalUIObject.word) {
       setScore(score + 1)
-      // TODO: Display win prompt
+      prompt_msg(promptRef, "That's correct!")
       initiate_game(plain_game)
     }
     // If the limit is reached without right guesses, execute loss routine
     else if (globalUIObject.guesses.length === 6) {
       // TODO: prompt loss
-      setScore(0)
-      initiate_game(plain_game)
-      console.log("YOU LOST")
+      prompt_msg(promptRef, `You Lost. The word was: ${globalUIObject.word.charAt(0).toUpperCase() + globalUIObject.word.slice(1)}`)
+      reset()
     } 
   }
   
@@ -214,7 +213,7 @@ function App() {
       let row = []
 
       if (i === 2) {
-        row.push(<div className='keyboard-key enter' onClick={() => enter_guess.current.click()} key={"enter"}>⏎</div>)
+        row.push(<div className='keyboard-key enter' onClick={e => enter(e)} ref={enter_guess} key={"enter"}>⏎</div>)
       }
 
       e.forEach(key => {
@@ -238,7 +237,7 @@ function App() {
       })
 
       if (i === 2) {
-        row.push(<div className='keyboard-key backspace' onClick={() => bspace.current.click()} key={"backspace"}>⌫</div>)
+        row.push(<div className='keyboard-key backspace' onClick={(e) => remove_letter(e)} ref={bspace} key={"backspace"}>⌫</div>)
       }
 
       rows.push(<div className='keyboard-row' key={rows.length}>{row}</div>)
@@ -272,7 +271,6 @@ function App() {
     
 
     let g_count = globalUIObject.guesses.length
-
     let rows = []
 
     // Already guessed
@@ -291,7 +289,7 @@ function App() {
             row.push(<div className='wordle-space input'></div>)
           }
         }
-      rows.push(<div className='wordle-row'>{row}</div>)
+      rows.push(<div className='wordle-row' ref={inputLineRef}>{row}</div>)
     }
 
     // Rest
@@ -380,15 +378,64 @@ function App() {
     localStorage.setItem("wordle-game-score", JSON.stringify(score))
   }, [globalUIObject])
 
+  // More GUI-specific functionalities, animation,
+  // and special button presses
+  const reset = () => {
+    setScore(0)
+    initiate_game(plain_game)
+  }
+
+  const remove_letter = (e) => {
+    e.preventDefault();
+    update_globalUI_object(globalUIObject, {...globalUIObject, input_line:globalUIObject.input_line.substring(0, globalUIObject.input_line.length - 1)})
+  }
+
+  const enter = (e) => {
+    e.preventDefault();
+    if (globalUIObject.input_line.split("").length === globalSettings.characters && Allowed_Words.words.includes(globalUIObject.input_line)) {
+      push_guess(globalUIObject, globalUIObject.input_line)
+    }
+    else {
+      shakeUI(inputLineRef)
+      prompt_msg (promptRef, "Not a word!")
+    }
+  }
+
+  const inputLineRef = useRef(null)
+  const shakeUI = ref => {
+    ref.current.classList.add("shake")
+    setTimeout(() => {
+      ref.current.classList.remove("shake")
+    }, 1500)
+  }
+
+  const promptRef = useRef(null)
+  const prompt_msg = (ref, msg) => {
+    console.log(ref.current.children[0].innerText)
+    ref.current.children[0].innerText = msg
+    ref.current.classList.remove("hidden")
+    ref.current.classList.add("fade-in")
+    setTimeout(() => {
+      ref.current.classList.add("fade-out")
+      ref.current.classList.remove("fade-in")
+    }, 1000)
+    setTimeout(() => {
+      ref.current.classList.add("hidden")
+      ref.current.classList.remove("fade-out")
+      // ref.current.children[0].innerText = ""
+    }, 2000)
+  }
+
   return (
     <>
 
-    <Header reset={() => {
-            setScore(0)
-            initiate_game(plain_game)
-    }}/>
+    <Header reset={reset}/>
 
     <div className='canvas'>
+
+      <div className='prompt-msg hidden' ref={promptRef}>
+        <h3>Not a word!</h3>
+      </div>
       <div className='score'>
         <h4 style={{"textAlign": "center"}}>Score: {score}</h4>
       </div>
@@ -396,17 +443,6 @@ function App() {
       {guessCanvasUI}
       {keyboardUI}
 
-      <button onClick={(e) => {
-        e.preventDefault();
-        if (globalUIObject.input_line.split("").length === globalSettings.characters && Allowed_Words.words.includes(globalUIObject.input_line)) {
-          push_guess(globalUIObject, globalUIObject.input_line);
-        }
-      }} style={{"display": "none"}} ref={enter_guess}></button>
-
-      <button onClick={(e) => {
-        e.preventDefault();
-        update_globalUI_object(globalUIObject, {...globalUIObject, input_line:globalUIObject.input_line.substring(0, globalUIObject.input_line.length - 1)})
-      }} style={{"display": "none"}} ref={bspace}></button>
     </div>
 
     </>
