@@ -1,10 +1,10 @@
 import './App.css';
 import { useState, useEffect, useRef } from 'react'
 
-import Allowed_Words from './allowed_words.json'
-import Possible_Words from './possible_words.json'
+import Allowed_Words from './sources/allowed_words.json'
+import Possible_Words from './sources/possible_words.json'
 
-import plain_game from './plain_game'
+import plain_game from './sources/plain_game'
 import Header from './components/header'
 
 function App() {
@@ -214,7 +214,7 @@ function App() {
       let row = []
 
       if (i === 2) {
-        row.push(<div className='keyboard-key enter' onClick={() => enter_guess.current.click()} key={"enter"}>↩</div>)
+        row.push(<div className='keyboard-key enter' onClick={() => enter_guess.current.click()} key={"enter"}>⏎</div>)
       }
 
       e.forEach(key => {
@@ -398,7 +398,7 @@ function App() {
 
       <button onClick={(e) => {
         e.preventDefault();
-        if (globalUIObject.input_line.split("").length === globalSettings.characters) {
+        if (globalUIObject.input_line.split("").length === globalSettings.characters && Allowed_Words.words.includes(globalUIObject.input_line)) {
           push_guess(globalUIObject, globalUIObject.input_line);
         }
       }} style={{"display": "none"}} ref={enter_guess}></button>
