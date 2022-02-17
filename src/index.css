@@ -426,12 +426,14 @@ header {
 .prompt-msg {
   position: absolute;
   top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10000;
   width: fit-content;
   height: fit-content;
   padding: 0rem 1rem;
   border-radius: 0.5rem;
-  margin: 1rem;
+  margin-top: 1rem;
   background-color: white;
   transition: all 1s ease-in-out;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 8px;
