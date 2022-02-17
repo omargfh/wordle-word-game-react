@@ -1,6 +1,6 @@
 {
   "name": "wordle",
-  "homepage": "http://wordle.omaribrahim.tech",
+  "homepage": "http://wordle.omar-ibrahim.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
