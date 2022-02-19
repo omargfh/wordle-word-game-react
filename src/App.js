@@ -1,11 +1,21 @@
 import './App.css';
 import { useState, useEffect, useRef } from 'react'
 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
+
 import Allowed_Words from './sources/allowed_words.json'
 import Possible_Words from './sources/possible_words.json'
 
 import plain_game from './sources/plain_game'
 import Header from './components/header'
+
+import { Dev } from './components/dev'
 
 function App() {
 
@@ -427,25 +437,26 @@ function App() {
   }
 
   return (
-    <>
+    <Router>
 
     <Header reset={reset}/>
 
-    <div className='canvas'>
-
-      <div className='prompt-msg hidden' ref={promptRef}>
-        <h3>Not a word!</h3>
-      </div>
-      <div className='score'>
-        <h4 style={{"textAlign": "center"}}>Score: {score}</h4>
-      </div>
-
-      {guessCanvasUI}
-      {keyboardUI}
-
-    </div>
-
-    </>
+    <Routes>
+      <Route exact path="/" element={
+        <div className='canvas'>
+          <div className='prompt-msg hidden' ref={promptRef}>
+            <h3>Not a word!</h3>
+        </div>
+        <div className='score'>
+          <h4 style={{"textAlign": "center"}}>Score: {score}</h4>
+        </div>
+          {guessCanvasUI}
+          {keyboardUI}
+        </div>
+      } />
+      <Route exact path="/dev" element={<Dev />}/>
+    </Routes>
+    </Router>
   );
 }
 
